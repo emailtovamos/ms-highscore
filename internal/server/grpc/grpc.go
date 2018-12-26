@@ -25,10 +25,22 @@ func NewServer(address string) *Grpc {
 	}
 }
 
+// GetHighScore returns the highscore from the HighScore variable
 func (g *Grpc) GetHighScore(ctx context.Context, input *pbhighscore.GetHighScoreRequest) (*pbhighscore.GetHighScoreResponse, error) {
 
 	return &pbhighscore.GetHighScoreResponse{
 		HighScore: HighScore,
+	}, nil
+
+}
+
+// SetHighScore sets the highscore to the HighScore variable
+func (g *Grpc) SetHighScore(ctx context.Context, input *pbhighscore.SetHighScoreRequest) (*pbhighscore.SetHighScoreResponse, error) {
+
+	HighScore = input.HighScore
+
+	return &pbhighscore.SetHighScoreResponse{
+		Set: true,
 	}, nil
 
 }
