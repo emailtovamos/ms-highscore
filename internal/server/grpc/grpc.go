@@ -14,9 +14,10 @@ type Grpc struct {
 	srv     *grpc.Server
 }
 
-var (
-	HighScore float64
-)
+// var (
+// 	HighScore float64
+// )
+var HighScore = 4445555.0
 
 // NewServer creates a new instance of a gRPC server
 func NewServer(address string) *Grpc {
@@ -27,7 +28,7 @@ func NewServer(address string) *Grpc {
 
 // GetHighScore returns the highscore from the HighScore variable
 func (g *Grpc) GetHighScore(ctx context.Context, input *pbhighscore.GetHighScoreRequest) (*pbhighscore.GetHighScoreResponse, error) {
-
+	// HighScore = 44444.0
 	return &pbhighscore.GetHighScoreResponse{
 		HighScore: HighScore,
 	}, nil
