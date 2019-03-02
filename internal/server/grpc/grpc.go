@@ -29,6 +29,7 @@ func NewServer(address string) *Grpc {
 // GetHighScore returns the highscore from the HighScore variable
 func (g *Grpc) GetHighScore(ctx context.Context, input *pbhighscore.GetHighScoreRequest) (*pbhighscore.GetHighScoreResponse, error) {
 	// HighScore = 44444.0
+	log.Info().Msg("GetHighScore in ms-highscore called")
 	return &pbhighscore.GetHighScoreResponse{
 		HighScore: HighScore,
 	}, nil
