@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	// "google.golang.org/grpc"
+	grpcSetup "github.com/emailtovamos/ms-highscore/internal/server/grpc"
 	"github.com/rs/zerolog/log"
-	grpcSetup "github.com/teach/ms-highscore/internal/server/grpc"
 )
 
 func main() {

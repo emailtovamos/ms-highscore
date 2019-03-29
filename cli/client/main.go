@@ -6,8 +6,8 @@ import (
 	// "io/ioutil"
 	"flag"
 
+	pbhighscore "github.com/emailtovamos/ms-apis/ms-highscore/v1"
 	"github.com/rs/zerolog/log"
-	pbhighscore "github.com/teach/ms-apis/ms-highscore/v1"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"time"
