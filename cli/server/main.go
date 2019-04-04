@@ -9,8 +9,8 @@ import (
 
 func main() {
 
-	var addressPtr = flag.String("address", "localhost:50051", "address where you can connect with ms-highscore service")
-
+	var addressPtr = flag.String("address", ":50051", "address where you can connect with ms-highscore service")
+	// https://stackoverflow.com/questions/43911793/cannot-connect-to-go-grpc-server-running-in-local-docker-container
 	flag.Parse()
 
 	// Set up a connection to the server.
