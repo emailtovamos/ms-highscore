@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: &service-name ms-highscore
+  labels: &labels
+    app: *service-name
+spec:
+  minReadySeconds: 1
+  selector:
+    matchLabels: *labels
+  replicas: 1
+  revisionHistoryLimit: 10
+  template: #template for pods
+    metadata:
+      labels: *labels
+    spec:
+      containers:
+      - name: *service-name
+        image: emailtovamos/ms-highscore:latest
+        command: ["./binary"]  # == ENTRYPOINT
+        args: 
+          - --address=:50051
