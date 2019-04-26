@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: &service-name ms-highscore
+spec:
+  # This defines which pods are going to be represented by this Service
+  # The service becomes a network endpoint for either other services
+  # or maybe external users to connect to (eg browser)
+  type: ClusterIP
+  # type: NodePort
+  selector:  # use all `labels` set in `Deployment.spec.template.metadata`
+    app: *service-name
+  ports:
+    - name: http
+      port: 50051 # Port at which this will be accessed
+      targetPort: 50051 # Name of the container
+      protocol: TCP
+  # ports:
+  #   - name: http
+  #     port: 8081
+  #     nodePort: 30200
+  # type: NodePort
