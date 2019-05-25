@@ -14,9 +14,6 @@ type Grpc struct {
 	srv     *grpc.Server
 }
 
-// var (
-// 	HighScore float64
-// )
 var HighScore = 4445555.0
 
 // NewServer creates a new instance of a gRPC server
@@ -50,51 +47,24 @@ func (g *Grpc) SetHighScore(ctx context.Context, input *pbhighscore.SetHighScore
 // ListenAndServe starts the gRPC server on the given address
 func (g *Grpc) ListenAndServe() error {
 	// open tcp port to listen for incoming connections on
+	// 1st Step
 	lis, err := net.Listen("tcp", g.address)
 	if err != nil {
 		return errors.Wrap(err, "failed to open socket")
 	}
 
-	// tracers will default to a NOOP tracer if nothing was configured
-	// streamTracingInterceptor := grpc_opentracing.StreamServerInterceptor(grpc_opentracing.WithTracer(opentracing.GlobalTracer()))
-	// unaryTracingInterceptor := grpc_opentracing.UnaryServerInterceptor(grpc_opentracing.WithTracer(opentracing.GlobalTracer()))
-
-	// add prometheus middleware
-	// grpc_prometheus.EnableHandlingTimeHistogram(grpc_prometheus.WithHistogramBuckets(
-	// 	metrics_helpers.ExpBuckets(
-	// 		float64(10*time.Microsecond)/float64(time.Second),
-	// 		1, 20,
-	// 	),
-	// ))
-
-	// serverOpts := []grpc.ServerOption{
-	// 	grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(
-	// 		streamTracingInterceptor,
-	// 		grpc_prometheus.StreamServerInterceptor,
-	// 	)),
-	// 	grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
-	// 		unaryTracingInterceptor,
-	// 		grpc_prometheus.UnaryServerInterceptor,
-	// 	))}
 	serverOpts := []grpc.ServerOption{}
 
 	// create the server with the specified options
 	g.srv = grpc.NewServer(serverOpts...)
 
+	// 2nd Step
 	pbhighscore.RegisterGameServer(g.srv, g)
-
-	// initialize health server
-	// hs := health.NewServer()
-	// grpc_health_v1.RegisterHealthServer(g.srv, hs)
 
 	log.Info().Str("addr", g.address).Msg("starting gRPC server")
 
-	// shutdown the server gracefully when leaving this function
-	// defer func() {
-	// 	g.GracefulStop()
-	// }()
-
 	// start listening on the given address
+	// 3rd Step
 	if err := g.srv.Serve(lis); err != nil {
 		return errors.Wrap(err, "failed to start gRPC server")
 	}
